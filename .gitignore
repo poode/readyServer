@@ -1,0 +1,8 @@
+node_modules
+.env
+error.log
+exceptions.log
+combined.log
+.snyk
+API-Documentation.yml
+.desktopfolder
