@@ -1,10 +1,10 @@
-# Express Server Ready
+# Express Ready Server
 
 ## Server Feature
 
 * Logger
 * Most important middlewares
-* we can use it with http or https via envirnoment variable
+* We can use it with http or https via envirnoment variable
 
 ## How to Use
 

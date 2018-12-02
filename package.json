@@ -1,10 +1,10 @@
 {
-  "name": "vidly",
+  "name": "express-ready-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Easy Server to use",
   "main": "index.js",
   "scripts": {
-    "test": "snyk test",
+    "security": "snyk test",
     "dev": "nodemon index",
     "start": "node index",
     "secret": "node util/cli/secretGenerator/secretGenerator.js" 
