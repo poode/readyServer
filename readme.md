@@ -8,7 +8,7 @@
 
 ## How to Use
 
-* clone repo `git clone https://github.com/poode/vadly`
+* clone repo `git clone https://github.com/poode/readyServer.git`
 * run `npm i`
 * run `npm i -g nodemon`
 * set your environment vairables in `.env` like `.env.example`
