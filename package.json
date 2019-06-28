@@ -7,7 +7,7 @@
     "security": "snyk test",
     "dev": "nodemon index",
     "start": "node index",
-    "secret": "node util/cli/secretGenerator/secretGenerator.js" 
+    "secret": "node util/cli/secretGenerator/secretGenerator.js"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +24,6 @@
     "express-paginate": "^1.0.0",
     "express-promise-router": "^3.0.3",
     "express-rate-limit": "^3.1.0",
-    "fawn": "^2.1.5",
     "fs": "0.0.1-security",
     "helmet": "^3.13.0",
     "hoek": "^5.0.4",
@@ -41,6 +40,7 @@
     "os": "^0.1.1",
     "path": "^0.12.7",
     "randomatic": "^3.1.1",
+    "socket.io": "^2.2.0",
     "toobusy-js": "^0.5.1",
     "winston": "^3.0.0"
   },
@@ -48,7 +48,7 @@
     "eslint": "^5.4.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "jest": "^23.5.0",
+    "jest": "^24.8.0",
     "snyk": "^1.94.0"
   }
 }
