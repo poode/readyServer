@@ -1,6 +1,8 @@
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const io = require('socket.io');
+
 const { logger } = require('../../config/logger');
 
 const credentials = {
@@ -9,9 +11,13 @@ const credentials = {
 };
 
 function httpsServer(app) {
-  https
+  const server = https
     .createServer(credentials, app)
-    .listen(process.env.PORT, () => logger.info(`server is up on https://localhost:${process.env.PORT}`));
+    .listen(process.env.PORT, () => {
+      logger.info(`server is up on https://localhost:${process.env.PORT}`);
+    });
+  const socket = io(server);
+  return socket;
 }
 
 module.exports = {
