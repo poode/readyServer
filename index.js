@@ -4,8 +4,8 @@ require('dotenv').config();
 const cluster = require('cluster');
 const os = require('os');
 
-const { app, server, socketServer } = require('./config/socket');
-const { appSecure, serverSecure, socketServerSecure } = require('.//util/runningServerUsingHttps/httpsServer');
+const { app, server, socketServer, serverSecure, socketServerSecure } = require('./config/socket');
+// const { appSecure, serverSecure, socketServerSecure } = require('./util/runningServerUsingHttps/httpsServer');
 
 const { logger } = require('./config/logger');
 
@@ -15,7 +15,7 @@ require('./config/db');
 
 function serverStart(port) {
   if (JSON.parse(process.env.HTTPS)) {
-    require('./config/appConfiguration')(appSecure, socketServerSecure);
+    require('./config/appConfiguration')(app, socketServerSecure);
     return serverSecure.listen(port, () => {
       logger.info(`server is up on https://localhost:${port}`);
     });
@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === 'production') {
   serverStart(process.env.PORT);
 }
 
-// wwe can useuser socketServer or  socketServerSecure
+// we can useuser socketServer or  socketServerSecure if https enabled
 // how ever there is io poperty in res.locals whcihc is socket server
 // and we can use with any place o he app\
 

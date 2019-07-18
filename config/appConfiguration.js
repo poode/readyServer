@@ -29,7 +29,7 @@ module.exports = (app, io) => {
   app.use(translatorMiddleware);
   app.get('/', (req, res) => {
     // test in socket connection on opeing root route
-    res.locals.io.emit('serverStart', { message: 'welcome to socket Server' });
+    res.locals.io.emit('serverStart', { message: 'welcome to socket Server from root route' });
     return res.json({ message: 'Server is up and running...' });
   });
   app.use(authRoute.BaseRoute, login);
