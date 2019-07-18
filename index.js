@@ -1,31 +1,30 @@
+/* eslint-disable global-require */
 const express = require('express');
 require('dotenv').config();
 const cluster = require('cluster');
 const os = require('os');
-const io = require('socket.io');
+
+const { app, server, socketServer } = require('./config/socket');
+const { appSecure, serverSecure, socketServerSecure } = require('.//util/runningServerUsingHttps/httpsServer');
 
 const { logger } = require('./config/logger');
-const { httpsServer } = require('./util/runningServerUsingHttps/httpsServer');
 
-const app = express();
+
 app.use(express.json());
 require('./config/db');
-require('./config/appConfiguration')(app);
 
-function server(port) {
+function serverStart(port) {
   if (JSON.parse(process.env.HTTPS)) {
-    const socket = httpsServer(app);
-    return socket;
-    // eslint-disable-next-line brace-style
-  }
-  // eslint-disable-next-line no-else-return
-  else {
-    const serverObj = app.listen(port, () => {
-      logger.info(`server is up on http://localhost:${process.env.PORT}`);
+    require('./config/appConfiguration')(appSecure, socketServerSecure);
+    return serverSecure.listen(port, () => {
+      logger.info(`server is up on https://localhost:${port}`);
     });
-    const socket = io(serverObj);
-    return socket;
   }
+
+  require('./config/appConfiguration')(app, socketServer);
+  return server.listen(port, () => {
+    logger.info(`server is up on http://localhost:${port}`);
+  });
 }
 
 
@@ -55,15 +54,19 @@ function forkCPUs(serverReady) {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  forkCPUs(server);
+  forkCPUs(serverStart);
 } else {
-  const socketServer = server(process.env.PORT);
-  // socket is here @TODO handl it outside index to make socket standalone module
-  socketServer.on('connection', (socket) => {
-    socket.emit('welcome', { message: 'Welcome to server socket!' });
-
-    socket.on('cool', (socData) => {
-      logger.info(socData);
-    });
-  });
+  serverStart(process.env.PORT);
 }
+
+// wwe can useuser socketServer or  socketServerSecure
+// how ever there is io poperty in res.locals whcihc is socket server
+// and we can use with any place o he app\
+
+// test for socket connection
+socketServer.on('connection', (socket) => {
+  socket.on('cool', data => console.log(data));
+  setInterval(() => {
+    socket.emit('welcome', { message: 'welcome to the socket server', time: Date() });
+  }, 1000);
+});

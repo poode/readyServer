@@ -15,15 +15,23 @@ const { RateLimiter } = require('../middleware/rateLimiter');
 const { tooBusyMiddleware } = require('../middleware/tooBusy');
 const { translatorMiddleware } = require('../middleware/translator');
 
-module.exports = (app) => {
+module.exports = (app, io) => {
   app.use(compression());
   app.use(helmetMiddleware);
   app.use(logHandler);
   app.use(tooBusyMiddleware);
   app.use(corsMiddleware);
+  app.use((req, res, next) => {
+    res.locals.io = io;
+    next();
+  });
   app.use(new RateLimiter(15, 100).limiter);
   app.use(translatorMiddleware);
-  app.get('/', (req, res) => res.json({ message: 'Server is up and running...' }));
+  app.get('/', (req, res) => {
+    // test in socket connection on opeing root route
+    res.locals.io.emit('serverStart', { message: 'welcome to socket Server' });
+    return res.json({ message: 'Server is up and running...' });
+  });
   app.use(authRoute.BaseRoute, login);
   app.use(paginate.middleware(10, 50));
   app.use(userRoute.BaseRoute, users);
