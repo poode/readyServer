@@ -10,8 +10,8 @@ const server = http.createServer(app);
 const socketServer = io(server);
 
 const credentials = {
-  key: fs.readFileSync(path.resolve(`${__dirname}/my-api.key`), 'utf8'),
-  cert: fs.readFileSync(path.resolve(`${__dirname}/my-api.crt`), 'utf8'),
+  key: fs.readFileSync(path.resolve(`${__dirname}/ssl/my-api.key`), 'utf8'),
+  cert: fs.readFileSync(path.resolve(`${__dirname}/ssl/my-api.crt`), 'utf8'),
 };
 
 const serverSecure = https.createServer(credentials, app);

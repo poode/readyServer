@@ -8,9 +8,9 @@ function MemoryStore(windowMs) {
   let hits = {};
   let resetTime = calculateNextResetTime(windowMs);
 
-  this.incr = function (key, cb) {
+  this.incr = (key, cb) => {
     if (hits[key]) {
-      hits[key]++;
+      hits[key] += 1;
     } else {
       hits[key] = 1;
     }
@@ -18,20 +18,20 @@ function MemoryStore(windowMs) {
     cb(null, hits[key], resetTime);
   };
 
-  this.decrement = function (key) {
+  this.decrement = (key) => {
     if (hits[key]) {
-      hits[key]--;
+      hits[key] -= 1;
     }
   };
 
   // export an API to allow hits all IPs to be reset
-  this.resetAll = function () {
+  this.resetAll = () => {
     hits = {};
     resetTime = calculateNextResetTime(windowMs);
   };
 
   // export an API to allow hits from one IP to be reset
-  this.resetKey = function (key) {
+  this.resetKey = (key) => {
     delete hits[key];
     delete resetTime[key];
   };

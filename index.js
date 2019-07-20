@@ -4,10 +4,16 @@ require('dotenv').config();
 const cluster = require('cluster');
 const os = require('os');
 
-const { app, server, socketServer, serverSecure, socketServerSecure } = require('./config/socket');
-// const { appSecure, serverSecure, socketServerSecure } = require('./util/runningServerUsingHttps/httpsServer');
+const {
+  app,
+  server,
+  socketServer,
+  serverSecure,
+  socketServerSecure,
+} = require('./config/socket');
 
 const { logger } = require('./config/logger');
+const { slog } = require('./util/simpleLog');
 
 
 app.use(express.json());
@@ -65,7 +71,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // test for socket connection
 socketServer.on('connection', (socket) => {
-  socket.on('cool', data => console.log(data));
+  socket.on('cool', data => slog(data));
   setInterval(() => {
     socket.emit('welcome', { message: 'welcome to the socket server', time: Date() });
   }, 1000);

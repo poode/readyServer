@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const _ = require('lodash');
 const { logger } = require('../config/logger');
 
