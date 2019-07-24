@@ -1,4 +1,5 @@
 # Express Ready Server
+[![Known Vulnerabilities](https://snyk.io//test/github/poode/readyServer/badge.svg?targetFile=package.json)](https://snyk.io//test/github/poode/readyServer?targetFile=package.json)
 
 ## Server Feature
 
