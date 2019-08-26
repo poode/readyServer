@@ -1,6 +1,6 @@
 const compression = require('compression');
 
-const { myRouter } = require('../api/router/router');
+const { myRouter } = require('../api/router');
 const errorHandler = require('../middleware/errorHandler');
 const logHandler = require('../middleware/logHandler');
 const corsMiddleware = require('../middleware/cors');
