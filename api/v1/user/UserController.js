@@ -28,14 +28,16 @@ class UserController {
 
   async index(req, res) {
     const users = await this.model.find();
-    const usersFound = _.map(users, user => ({ _id: user.id, name: user.name, email: user.email }));
+    const usersFound = _.map(users, (user) => (
+      { _id: user.id, name: user.name, email: user.email }
+    ));
     res.json(usersFound);
   }
 
   async getLimited(req, res) {
     const limitedUsersList = await pagination(this.model, req);
     const userList = limitedUsersList.data
-      .map(user => _.pick(user, ['_id', 'username', 'email', 'firstName', 'lastName']));
+      .map((user) => _.pick(user, ['_id', 'username', 'email', 'firstName', 'lastName']));
     const userListMapped = _.pick(limitedUsersList,
       ['object', 'data', 'has_more', 'pageCount', 'itemCount', 'pages']);
     delete userListMapped.data;
