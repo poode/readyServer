@@ -2,7 +2,7 @@ const router = require('express-promise-router')();
 
 const { isAuthorized } = require('../../../middleware/authorization');
 const UserController = require('./UserController');
-const { userRoute } = require('../../../config/appRouteList');
+const { userRoute } = require('../../router/appRouteList');
 
 const {
   root,

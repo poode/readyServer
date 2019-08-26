@@ -1,7 +1,7 @@
 const router = require('express-promise-router')();
 
 const { index } = require('./LoginController');
-const { authRoute } = require('../../../config/appRouteList');
+const { authRoute } = require('../../router/appRouteList');
 
 const { root } = authRoute;
 
