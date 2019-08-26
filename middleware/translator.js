@@ -5,6 +5,7 @@ const options = {
   translationsPath: path.join(__dirname, '../translations'),
   siteLangs: ['en', 'ar'],
   defaultLang: ['ar'],
-  textsVarName: 'trans',
+  paramLangName: 'lang', // as query param sent in request
+  textsVarName: 'trans', // the property that will hold translated object
 };
 exports.translatorMiddleware = i18n(options);
