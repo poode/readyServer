@@ -65,9 +65,9 @@ if (process.env.NODE_ENV === 'production') {
   serverStart(process.env.PORT);
 }
 
-// we can useuser socketServer or  socketServerSecure if https enabled
-// how ever there is io poperty in res.locals whcihc is socket server
-// and we can use with any place o he app\
+// we can useuser socketServer or socketServerSecure if https enabled
+// however there is io poperty in res.locals whcih is socket server
+// and we can use with any place on the app\
 
 // test for socket connection
 socketServer.on('connection', (socket) => {
