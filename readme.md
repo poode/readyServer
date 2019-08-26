@@ -4,12 +4,12 @@
 
 ## Server Feature
 
-* Logger.
+* Logger using winston.
 * Most important middlewares.
 * We can use it with http or https via envirnoment variable.
 * Socket support (http & https) but not working with cluster (known issue it needs socket Adapter with redis server).
 * Implemented Localized and translation could be found in (req.app.locals.trans) Object (incomplete).
-* logger using winston and there is error handler also there is response compressor for response size more than 1 M.
+* Response compressor for response size more than 1 M.
 
 ## How to Use
 
