@@ -3,11 +3,12 @@
 /**
  *
  *
- * @param {*} msg
+ * @param { string } msg
+ * @param { Object } object
  */
-function slog(msg) {
+function slog(msg, object) {
   if (process.env.NODE_ENV === 'dev') {
-    console.log(`${msg} ===> `, msg);
+    console.log(`${msg} ===>>> `, object);
   }
 }
 
