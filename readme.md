@@ -10,6 +10,7 @@
 * Socket support (http & https) but not working with cluster (known issue it needs socket Adapter with redis server).
 * Implemented Localized and translation could be found in (req.app.locals.trans) Object.
 * Response compressor for response size more than 1 M.
+* Graphql implemented (The Example is not working but it is for clarifications)
 
 ## How to Use
 
@@ -20,6 +21,7 @@
 * run `npm run start` to start server.
 * run `npm run dev` to start server with `nodemon` for development.
 * please follow .env.example comments.
+* to use graphql open (`http://localhost:3000/graphql`) Note: or `https` if you used it and maybe another port as per `.env` file pre-configration by you.
 
 ## Examples for APIs
 
