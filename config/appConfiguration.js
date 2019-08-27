@@ -8,6 +8,7 @@ const helmetMiddleware = require('../middleware/helmet');
 const { RateLimiter } = require('../middleware/rateLimiter');
 const { tooBusyMiddleware } = require('../middleware/tooBusy');
 const { translatorMiddleware } = require('../middleware/translator');
+const { graphqlMiddelware } = require('../middleware/graphql');
 
 module.exports = (app, io) => {
   app.use(compression());
@@ -19,8 +20,15 @@ module.exports = (app, io) => {
     res.locals.io = io;
     next();
   });
-  app.use(new RateLimiter(15, 100).limiter);
-  app.use(translatorMiddleware);
+  if (process.env.APP_ENV === 'production') {
+    app.use(new RateLimiter(15, 100).limiter);
+    app.use(translatorMiddleware);
+    graphqlMiddelware(app);
+  } else {
+    app.use(translatorMiddleware);
+    graphqlMiddelware(app);
+    app.use(new RateLimiter(15, 100).limiter);
+  }
   app.get('/', (req, res) => {
     // test in socket connection on opeing root route
     res.locals.io.emit('serverStart', { message: 'welcome to socket Server from root route' });
