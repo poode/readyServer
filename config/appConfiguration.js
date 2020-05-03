@@ -8,7 +8,7 @@ const helmetMiddleware = require('../middleware/helmet');
 const { RateLimiter } = require('../middleware/rateLimiter');
 const { tooBusyMiddleware } = require('../middleware/tooBusy');
 const { translatorMiddleware } = require('../middleware/translator');
-const { graphqlMiddelware } = require('../middleware/graphql');
+const { graphqlMiddleware } = require('../middleware/graphql');
 
 module.exports = (app, io) => {
   app.use(compression());
@@ -23,10 +23,10 @@ module.exports = (app, io) => {
   if (process.env.APP_ENV === 'production') {
     app.use(new RateLimiter(15, 100).limiter);
     app.use(translatorMiddleware);
-    graphqlMiddelware(app);
+    graphqlMiddleware(app);
   } else {
     app.use(translatorMiddleware);
-    graphqlMiddelware(app);
+    graphqlMiddleware(app);
     app.use(new RateLimiter(15, 100).limiter);
   }
   app.get('/', (req, res) => {

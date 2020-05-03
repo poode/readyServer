@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 async function isAuthorized(req, res, next) {
   if (req.path === '/create') return next();
-  const token = req.get('x-auth-token');
+  const token = req.get('Authorization');
   if (!token) {
     next({ message: 'I don\'t know you, who are you?!', status: 403 });
     return false;
@@ -21,8 +21,8 @@ async function isAuthorized(req, res, next) {
       next({ message: 'invalid token', status: 403 });
       return false;
     }
-    res.header('x-auth-token-creation', iat);
-    res.header('x-auth-token-expiry', exp);
+    res.header('Authorization-creation', iat);
+    res.header('Authorization-expiry', exp);
     res.locals.userId = id;
     res.locals.username = username;
     next();

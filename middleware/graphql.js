@@ -2,7 +2,7 @@ const { ApolloServer } = require('apollo-server-express');
 
 const { resolvers, typeDefs } = require('../graphql');
 
-module.exports.graphqlMiddelware = (app) => {
+module.exports.graphqlMiddleware = (app) => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,

@@ -4,18 +4,17 @@
   "description": "Easy Server to use",
   "main": "index.js",
   "scripts": {
-    "security": "snyk test",
     "dev": "nodemon index",
     "start": "node index",
-    "secret": "node util/cli/secretGenerator/secretGenerator.js",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "secret": "node util/cli/secretGenerator/secretGenerator.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@godaddy/terminus": "^2.4.1",
+    "ajv": "^6.12.2",
+    "ajv-errors": "^1.0.1",
     "apollo-server-express": "^2.9.0",
     "bcrypt": "^3.0.0",
     "cluster": "^0.7.7",
@@ -38,18 +37,17 @@
     "mysql2": "^1.6.5",
     "npmlog": "^4.1.2",
     "randomatic": "^3.1.1",
-    "sequelize": "^5.16.0",
+    "sequelize": "^5.21.7",
     "socket.io": "^2.2.0",
     "toobusy-js": "^0.5.1",
-    "winston": "^3.0.0",
-    "snyk": "^1.258.2"
+    "winston": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "jest": "^24.8.0",
-    "nodemon": "^1.19.1"
-  },
-  "snyk": true
+    "nodemon": "^1.19.1",
+    "sequelize-cli": "^5.5.1"
+  }
 }

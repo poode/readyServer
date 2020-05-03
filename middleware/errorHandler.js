@@ -13,27 +13,25 @@ process.on('uncaughtException', (err) => {
   process.exit();
 });
 
-class ServerError extends Error {
-  constructor(message, status = 500) {
-    super(message);
-    this.status = status;
-  }
-}
+
 module.exports = (err, req, res, next) => {
-  const ErrorObj = new ServerError(err.message, err.status);
-  if (!ErrorObj.status) ErrorObj.status = 500;
   if (err.name === 'TokenExpiredError') {
-    ErrorObj.status = 403;
-    ErrorObj.message = `your session has been expired at ${err.expiredAt}`;
+    err.status = 403;
+    err.message = `your session has been expired at ${err.expiredAt}`;
+  }
+
+  if(!err.status) {
+    logger.error(error);
+    process.exit(0);
   }
 
   const error = {
-    message: ErrorObj.message,
+    message: err.message,
     requestedUrl: req.url,
     requestedMethod: req.method,
-    status: ErrorObj.status,
-    stack: ErrorObj.stack,
+    status: err.status,
+    stack: err.stack,
   };
   logger.error(JSON.stringify(error, ['message', 'requestedUrl', 'requestedMethod', 'status']));
-  return res.status(ErrorObj.status).json({ error: _.pick(error, ['message', 'status']) });
+  return res.status(err.status).json({ error: _.pick(error, ['message', 'status']) });
 };

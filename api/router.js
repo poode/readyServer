@@ -7,7 +7,7 @@ const { authRouter, authRoute } = require('./v1/login').router;
 
 const myRouter = (app) => {
   app.use(authRoute.BaseRoute, authRouter);
-  // here we can add any middelware as needed like paginate.middleware
+  // here we can add any middleware as needed like paginate.middleware
   app.use(paginate.middleware(10, 50));
   app.use(userRoute.BaseRoute, userRouter);
 };
