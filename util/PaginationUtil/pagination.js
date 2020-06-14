@@ -2,7 +2,8 @@ const paginate = require('express-paginate');
 
 async function pagination(model, req) {
   const [results, itemCount] = await Promise.all([
-    model.find({}).limit(req.query.limit).skip(req.skip).lean()
+    model.find({}).limit(req.query.limit).skip(req.skip)
+      .lean()
       .exec(),
     model.count({}),
   ]);
