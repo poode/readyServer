@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon index",
     "start": "node index",
-    "secret": "node util/cli/secretGenerator/secretGenerator.js"
+    "secret": "node util/cli/secretGenerator/secretGenerator.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [],
   "author": "",
@@ -40,14 +42,16 @@
     "sequelize": "^5.21.7",
     "socket.io": "^2.2.0",
     "toobusy-js": "^0.5.1",
-    "winston": "^3.0.0"
+    "winston": "^3.0.0",
+    "snyk": "^1.316.2"
   },
   "devDependencies": {
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "jest": "^24.8.0",
-    "nodemon": "^1.19.1",
+    "nodemon": "^2.0.3",
     "sequelize-cli": "^5.5.1"
-  }
+  },
+  "snyk": true
 }
