@@ -1,5 +1,5 @@
 /**
- * This file is to generate secret Key which your app will use to verfiy signture or encrypt data.
+ * This file is to generate secret Key which your app will use to verify signature or encrypt data.
  * your .env file should has APP_SECRET='key' to replace it with this function below
  * just run node util/cli/secretGenerator/secretGenerator.js
  */
