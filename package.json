@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@godaddy/terminus": "^2.4.1",
-    "ajv": "^6.12.2",
+    "ajv": "^6.12.3",
     "ajv-errors": "^1.0.1",
     "apollo-server-express": "^2.25.3",
     "bcrypt": "^5.0.1",
