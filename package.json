@@ -15,7 +15,7 @@
     "@godaddy/terminus": "^2.4.1",
     "ajv": "^6.12.2",
     "ajv-errors": "^1.0.1",
-    "apollo-server-express": "^2.25.3",
+    "apollo-server-express": "^3.0.0",
     "bcrypt": "^5.0.1",
     "cluster": "^0.7.7",
     "compression": "^1.7.3",
