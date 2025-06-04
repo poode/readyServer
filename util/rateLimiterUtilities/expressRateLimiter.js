@@ -2,11 +2,30 @@
 /**
  * thanks for express-rate-limiter@npm
  */
-const defaults = require('defaults');
+
 const MemoryStore = require('./memoryStore');
 
 function RateLimit(option) {
-  const options = defaults(option, {
+  const defaultKeyGenerator = (req, res) => ({
+    user: {
+      id: res.locals.userId,
+      email: res.locals.userEmail,
+    },
+    ip: req.ip,
+  });
+
+  const defaultSkip = (/* req, res */) => false;
+  const defaultHandler = (req, res, next) => {
+    // res.status(options.statusCode).send(options.message);
+    const err = { message: options.message, status: options.statusCode };
+    throw err;
+  };
+  const defaultOnLimitReached = (/* req, res, optionsUsed */) => {};
+
+  // Extract functions from option to prevent cloning by 'defaults'
+  const { keyGenerator, skip, handler, onLimitReached, ...restOption } = option;
+
+  const options = {
     // milliseconds - how long to keep records of requests in memory
     windowMs: 15 * 60 * 1000,
     // max number of recent connections during `window` milliseconds before sending a 429 response
@@ -16,26 +35,17 @@ function RateLimit(option) {
     headers: true, // Send custom rate limit header with limit and remaining
     skipFailedRequests: false, // Do not count failed requests (status >= 400)
     skipSuccessfulRequests: false, // Do not count successful requests (status < 400)
-    // allows to create custom keys (by default user IP is used)
-    keyGenerator(req, res) {
-      return {
-        user: {
-          id: res.locals.userId,
-          email: res.locals.userEmail,
-        },
-        ip: req.ip,
-      };
-    },
-    skip(/* req, res */) {
-      return false;
-    },
-    handler(req, res, next) {
-      // res.status(options.statusCode).send(options.message);
-      const err = { message: options.message, status: options.statusCode };
-      throw err;
-    },
-    onLimitReached(/* req, res, optionsUsed */) {},
-  });
+    skip: defaultSkip,
+    handler: defaultHandler,
+    onLimitReached: defaultOnLimitReached,
+    ...restOption,
+  };
+
+  // Manually assign functions after defaults to prevent cloning
+  options.keyGenerator = keyGenerator || defaultKeyGenerator;
+  options.skip = skip || defaultSkip;
+  options.handler = handler || defaultHandler;
+  options.onLimitReached = onLimitReached || defaultOnLimitReached;
 
   // store to use for persisting rate limit data
   options.store = options.store || new MemoryStore(options.windowMs);

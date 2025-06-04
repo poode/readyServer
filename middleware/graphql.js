@@ -2,7 +2,7 @@ const { ApolloServer } = require('apollo-server-express');
 
 const { resolvers, typeDefs } = require('../graphql');
 
-module.exports.graphqlMiddleware = (app) => {
+module.exports.graphqlMiddleware = async (app) => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -15,5 +15,6 @@ module.exports.graphqlMiddleware = (app) => {
       headers: req.headers,
     }),
   });
+  await server.start();
   server.applyMiddleware({ app });
 };

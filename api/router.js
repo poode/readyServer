@@ -9,6 +9,10 @@ const myRouter = (app) => {
   app.use(authRoute.BaseRoute, authRouter);
   // here we can add any middleware as needed like paginate.middleware
   app.use(paginate.middleware(10, 50));
+  app.use((req, res, next) => {
+    console.log(`Incoming Request URL: ${req.originalUrl}`);
+    next();
+  });
   app.use(userRoute.BaseRoute, userRouter);
 };
 

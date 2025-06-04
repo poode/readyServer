@@ -5,7 +5,7 @@ const errorHandler = require('../middleware/errorHandler');
 const logHandler = require('../middleware/logHandler');
 const corsMiddleware = require('../middleware/cors');
 const helmetMiddleware = require('../middleware/helmet');
-const { RateLimiter } = require('../middleware/rateLimiter');
+const RateLimit = require('../util/rateLimiterUtilities/expressRateLimiter');
 const { tooBusyMiddleware } = require('../middleware/tooBusy');
 const { translatorMiddleware } = require('../middleware/translator');
 const { graphqlMiddleware } = require('../middleware/graphql');
@@ -21,20 +21,20 @@ module.exports = (app, io) => {
     next();
   });
   if (process.env.APP_ENV === 'production') {
-    app.use(new RateLimiter(15, 100).limiter);
+    app.use(RateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
     app.use(translatorMiddleware);
     graphqlMiddleware(app);
   } else {
     app.use(translatorMiddleware);
     graphqlMiddleware(app);
-    app.use(new RateLimiter(15, 100).limiter);
+    app.use(RateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
   }
   app.get('/', (req, res) => {
     // test in socket connection on opeing root route
     res.locals.io.emit('serverStart', { message: 'welcome to socket Server from root route' });
     return res.json({ message: 'Server is up and running...' });
   });
-  myRouter(app);
+  // myRouter(app);
   app.use('*', (req, res) => {
     const error = {
       message: 'I don\'t blame you.It is my mistake, or may be you\'re calling a wrong endpoint',

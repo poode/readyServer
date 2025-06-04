@@ -1,18 +1,17 @@
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
+const { userRepository } = require('./UserModel');
 
-const { User } = require('./UserModel');
-
-const JoiUserSchema = {
+const JoiUserSchema = Joi.object({
   username: Joi.string().min(6).max(255).required(),
   email: Joi.string().email().max(255).required(),
   password: Joi.string().min(8).max(255).required(),
   firstName: Joi.string().max(255).required(),
   lastName: Joi.string().max(255).required(),
-};
+});
 
 function validateUser(user) {
-  return Joi.validate(user, JoiUserSchema);
+  return JoiUserSchema.validate(user);
 }
 
 async function bcryptPassword(password) {
@@ -22,8 +21,7 @@ async function bcryptPassword(password) {
 }
 
 async function getUser(email) {
-  const user = await User.findOne({ email });
-  return user;
+  return userRepository.findOne({ email });
 }
 
 module.exports = {
@@ -31,4 +29,5 @@ module.exports = {
   validateUser,
   bcryptPassword,
   getUser,
+  userRepository
 };
