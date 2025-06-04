@@ -5,7 +5,7 @@ const errorHandler = require('../middleware/errorHandler');
 const logHandler = require('../middleware/logHandler');
 const corsMiddleware = require('../middleware/cors');
 const helmetMiddleware = require('../middleware/helmet');
-const RateLimit = require('../util/rateLimiterUtilities/expressRateLimiter');
+const rateLimit = require('../util/rateLimiterUtilities/expressRateLimiter');
 const { tooBusyMiddleware } = require('../middleware/tooBusy');
 const { translatorMiddleware } = require('../middleware/translator');
 const { graphqlMiddleware } = require('../middleware/graphql');
@@ -21,13 +21,13 @@ module.exports = (app, io) => {
     next();
   });
   if (process.env.APP_ENV === 'production') {
-    app.use(RateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+    app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
     app.use(translatorMiddleware);
     graphqlMiddleware(app);
   } else {
     app.use(translatorMiddleware);
     graphqlMiddleware(app);
-    app.use(RateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+    app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
   }
   app.get('/', (req, res) => {
     // test in socket connection on opeing root route

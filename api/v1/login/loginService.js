@@ -1,23 +1,9 @@
-const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-
 const { User } = require('../user/UserModel');
+const { validateLogin } = require('./loginValidation');
 
-const JoiLoginSchema = {
-  username: Joi.string().min(6).max(255).required(),
-  password: Joi.string().min(8).max(255).required(),
-};
 
-function validation(credentials) {
-  return Joi.validate(credentials, JoiLoginSchema);
-}
-
-async function tokenGenerator(id, username) {
-  const token = await jwt.sign({ id, username }, process.env.APP_SECRET, { expiresIn: '30d' });
-  return token;
-}
 
 async function authentication(reqBody) {
   const result = {
@@ -25,7 +11,7 @@ async function authentication(reqBody) {
     error: '',
   };
 
-  const { error } = validation(reqBody);
+  const { error } = validateLogin(reqBody);
   if (error) {
     result.error = { message: error.details[0].message, status: 400 };
     return result;
@@ -42,7 +28,7 @@ async function authentication(reqBody) {
     result.error = { message: 'the entered username or password is invalid!', status: 400 };
     return result;
   }
-  const token = await tokenGenerator(user.id, user.username);
+  const token = await jwt.sign({ id: user.id, username: user.username }, process.env.APP_SECRET, { expiresIn: '30d' });
   result.message = {
     authenticated: true,
     userId: user.id,
