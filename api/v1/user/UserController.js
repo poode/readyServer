@@ -1,14 +1,8 @@
 const _ = require('lodash');
-const Joi = require('joi');
 const { pagination } = require('../../../util/PaginationUtil/pagination');
-const { validateUser, JoiUserSchema, bcryptPassword, userRepository } = require('./userService');
-
-function validateEmail(email) {
-  const JoiEmailSchema = Joi.object({
-    email: Joi.string().email().required(),
-  });
-  return JoiEmailSchema.validate({ email });
-}
+const { bcryptPassword } = require('./userService');
+const userRepository = require('./userRepository');
+const { validateUser, JoiUserSchema, validateEmail } = require('./userValidation');
 
 class UserController {
   /**
@@ -17,9 +11,8 @@ class UserController {
    * @param {object} deps.validationSchema
    * @param {object} deps.userRepository
    */
-  constructor({ validation, validationSchema, userRepository }) {
+  constructor({ validation, userRepository }) {
     this.validation = validation;
-    this.JoiSchema = validationSchema;
     this.userRepository = userRepository;
   }
 
@@ -71,7 +64,6 @@ class UserController {
 // Dependency injection
 const controller = new UserController({
   validation: validateUser,
-  validationSchema: JoiUserSchema,
   userRepository
 });
 
