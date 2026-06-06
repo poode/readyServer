@@ -7,7 +7,6 @@ const authRoute = {
   root: '/',
 };
 
-
 router.post(authRoute.root, index);
 
 module.exports = { authRouter: router, authRoute };

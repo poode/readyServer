@@ -1,22 +1,7 @@
-class UserRepository {
-  constructor(UserModel) {
-    this.UserModel = UserModel;
-  }
-
-  async findAll() {
-    return this.UserModel.find();
-  }
-
-  async findOne(query) {
-    return this.UserModel.findOne(query);
-  }
-
-  async create(userData) {
-    const user = new this.UserModel(userData);
-    return user.save();
-  }
-}
-
+/**
+ * Mongoose User schema (active when DB_TYPE=mongodb).
+ * The Sequelize equivalent lives in models/user.js.
+ */
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -29,8 +14,8 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    maxlength: 255,
     required: true,
+    maxlength: 255,
   },
   password: {
     type: String,
@@ -40,28 +25,21 @@ const userSchema = new mongoose.Schema({
   },
   firstName: {
     type: String,
-    minlength: 6,
-    maxlength: 255,
     required: true,
+    maxlength: 255,
   },
   lastName: {
     type: String,
-    minlength: 5,
-    maxlength: 255,
     required: true,
+    maxlength: 255,
   },
   avatar: {
     type: String,
     maxlength: 500,
     default: null,
   },
-});
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
-const userRepository = new UserRepository(User);
 
-module.exports = {
-  User,
-  UserRepository,
-  userRepository
-};
+module.exports = { User };

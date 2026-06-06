@@ -4,6 +4,10 @@ require('dotenv').config();
 const cluster = require('cluster');
 const os = require('os');
 
+const { validateEnv } = require('./config/validateEnv');
+
+validateEnv();
+
 const {
   app,
   server,
@@ -14,13 +18,13 @@ const {
 
 const { logger } = require('./config/logger');
 const { slog } = require('./util/simpleLog');
-
+const { connectDatabase } = require('./config/db');
 
 app.use(express.json());
-require('./config/db');
+connectDatabase();
 
 function serverStart(port) {
-  if (JSON.parse(process.env.HTTPS)) {
+  if (JSON.parse(process.env.HTTPS || 'false')) {
     require('./config/appConfiguration')(app, socketServerSecure);
     return serverSecure.listen(port, () => {
       logger.info(`server is up on https://localhost:${port}`);
@@ -32,7 +36,6 @@ function serverStart(port) {
     logger.info(`server is up on http://localhost:${port}`);
   });
 }
-
 
 function forkCPUs(serverReady) {
   // we can use process.env.WEB_CONCURRENCY if we know server concurrent connections that can handle
@@ -65,14 +68,12 @@ if (process.env.NODE_ENV === 'production') {
   serverStart(process.env.PORT);
 }
 
-// we can useuser socketServer or socketServerSecure if https enabled
-// however there is io poperty in res.locals whcih is socket server
-// and we can use with any place on the app\
-
-// test for socket connection
+// Example socket usage: the active socket server is also exposed on res.locals.io.
+// Greet each client once on connect (avoid unbounded timers per connection).
 socketServer.on('connection', (socket) => {
-  socket.on('cool', data => slog(data));
-  setInterval(() => {
-    socket.emit('welcome', { message: 'welcome to the socket server', time: Date() });
-  }, 1000);
+  socket.on('cool', (data) => slog(data));
+  socket.emit('welcome', {
+    message: 'welcome to the socket server',
+    time: new Date().toISOString(),
+  });
 });

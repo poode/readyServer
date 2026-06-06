@@ -12,7 +12,7 @@ const validate = (schema) => (req, res, next) => {
     return next();
   }
   // string with all errors and data paths
-  return res.status(400).json(validate.errors.map((error) => error.params));
+  return res.status(400).json(validateMe.errors.map((error) => error.params));
 };
 
 module.exports.validate = validate;

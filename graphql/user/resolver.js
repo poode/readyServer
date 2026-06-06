@@ -1,30 +1,14 @@
-
 /**
- * The `userQuery` or `userMutation` are objects of all queries or mutations resolver functions
- * related to user as this file `resolver` inside folder `user` will contain
- * all available resolvers needed
+ * `userQuery` / `userMutation` hold the user-related query and mutation resolvers.
+ * Placeholder examples — replace the bodies with real data-access logic.
  */
 exports.userQuery = {
-  // UserList: async () => {
-  //   const res = "await queryAllAsset('BUYER')"; // any normal functionality
-  //   if (!res) {
-  //     throw new Error('Error');
-  //   }
-  //   return res;
-  // },
-
-  // User: async (root, params) => {
-  //   const res = 'await queryAsset(params.buyerId)'; // any normal functionality
-  //   if (!res) {
-  //     throw new Error('Error');
-  //   }
-  //   return res;
-  // },
+  // User: async (root, params) => { ... return queried user ... },
 };
 
 exports.userMutation = {
-  updateUser: async (root, params) => {
-    const res = 'await updateAsset(params.buyerId, params.newProperties)'; // any normal functionality
+  updateUser: async () => {
+    const res = 'replace with your updateUser resolver implementation';
     if (!res) {
       throw new Error('Error');
     }

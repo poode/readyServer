@@ -33,7 +33,6 @@ fs.readFile(file, 'utf8', (err, data) => {
     return line;
   });
 
-
   const result = newSubStringArray.join(newLine);
   logger.info('done');
 

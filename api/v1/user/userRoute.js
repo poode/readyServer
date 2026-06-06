@@ -7,18 +7,17 @@ const userRoute = {
   BaseRoute: `${process.env.SERVER_ROOT_URL}/users`,
   root: '/',
   userList: '/usersList',
-  userByEmail: '/:username',
+  userByUsername: '/:username',
   registerUser: '/create',
 };
 
-router.all('*', isAuthorized)
-  .get(userRoute.root, UserController.index.bind(UserController))
-  .get(userRoute.userList, UserController.getLimited.bind(UserController))
-  .get(userRoute.userByEmail, UserController.getUser.bind(UserController))
-  .post(userRoute.registerUser, UserController.create.bind(UserController));
+// Public route: user registration requires no token.
+router.post(userRoute.registerUser, UserController.create.bind(UserController));
 
-// router.put('/:id', UserController.update.bind(UserController));
-
-// router.delete('/:id', UserController.destroy.bind(UserController));
+// Everything below this guard requires a valid Authorization token.
+router.all('*', isAuthorized);
+router.get(userRoute.root, UserController.index.bind(UserController));
+router.get(userRoute.userList, UserController.getLimited.bind(UserController));
+router.get(userRoute.userByUsername, UserController.getUser.bind(UserController));
 
 module.exports = { userRouter: router, userRoute };

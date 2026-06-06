@@ -1,0 +1,25 @@
+# Dependencies & build artifacts (reinstalled inside the image)
+node_modules
+npm-debug.log
+
+# VCS & tooling
+.git
+.gitignore
+.codegraph
+.cursor
+.claude
+
+# Local env & secrets (provided at runtime via env_file)
+.env
+.env.*
+config/ssl
+
+# Logs & tests
+logs
+*.log
+coverage
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+docker-compose.yml

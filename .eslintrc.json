@@ -12,8 +12,15 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2021
     },
     "rules": {
-    }
+        "no-underscore-dangle": ["error", { "allow": ["_id"] }]
+    },
+    "overrides": [
+        {
+            "files": ["**/*.test.js", "**/*.spec.js"],
+            "env": { "jest": true }
+        }
+    ]
 }

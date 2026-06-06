@@ -1,9 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User } = require('../user/UserModel');
+const userRepository = require('../user/userRepository');
 const { validateLogin } = require('./loginValidation');
-
-
 
 async function authentication(reqBody) {
   const result = {
@@ -17,7 +15,7 @@ async function authentication(reqBody) {
     return result;
   }
 
-  const user = await User.findOne({ username: reqBody.username });
+  const user = await userRepository.findOne({ username: reqBody.username });
   if (!user) {
     result.error = { message: 'user is not found in our databases', status: 404 };
     return result;
@@ -28,10 +26,17 @@ async function authentication(reqBody) {
     result.error = { message: 'the entered username or password is invalid!', status: 400 };
     return result;
   }
-  const token = await jwt.sign({ id: user.id, username: user.username }, process.env.APP_SECRET, { expiresIn: '30d' });
+
+  const userId = user.id || user._id;
+  const token = jwt.sign(
+    { id: userId, username: user.username },
+    process.env.APP_SECRET,
+    { expiresIn: '30d' },
+  );
+
   result.message = {
     authenticated: true,
-    userId: user.id,
+    userId,
     username: user.username,
     token,
   };

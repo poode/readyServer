@@ -9,14 +9,19 @@ const app = express();
 const server = http.createServer(app);
 const socketServer = io(server);
 
-const credentials = {
-  key: fs.readFileSync(path.resolve(`${__dirname}/ssl/my-api.key`), 'utf8'),
-  cert: fs.readFileSync(path.resolve(`${__dirname}/ssl/my-api.crt`), 'utf8'),
-};
+// HTTPS is optional. TLS material is NOT committed to the repo — provide your own
+// key/cert under config/ssl/, or keep HTTPS=false to run plain HTTP.
+let serverSecure = null;
+let socketServerSecure = null;
 
-const serverSecure = https.createServer(credentials, app);
-const socketServerSecure = io(serverSecure);
-
+if (JSON.parse(process.env.HTTPS || 'false')) {
+  const credentials = {
+    key: fs.readFileSync(path.resolve(`${__dirname}/ssl/my-api.key`), 'utf8'),
+    cert: fs.readFileSync(path.resolve(`${__dirname}/ssl/my-api.crt`), 'utf8'),
+  };
+  serverSecure = https.createServer(credentials, app);
+  socketServerSecure = io(serverSecure);
+}
 
 module.exports = {
   app,

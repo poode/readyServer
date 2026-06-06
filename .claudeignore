@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Lock files
+package-lock.json
+*.lock
+
+# Logs
+logs/
+*.log
+error.log
+exceptions.log
+combined.log
+
+# CodeGraph index (local only)
+.codegraph/
+.cursor/
+
+# Secrets — env and TLS material committed in config/
+.env
+.env.*
+*.pem
+*.key
+*.crt
+config/ssl/
+
+# Editor / misc
+.history/
+.idea/
+.snyk
+tmp/
+.tmp/

@@ -1,13 +1,10 @@
-
 /**
- * The `loginMutation` is object of all queries or mutations resolver functions
- * related to login as this file `resolver` inside folder `login` will contain
- * all available resolvers needed
+ * `loginMutation` holds the login-related mutation resolvers.
+ * Placeholder example — replace the body with real authentication logic.
  */
-
 exports.loginMutation = {
-  login: async (root, params) => {
-    const res = 'await updateAsset(params.buyerId, params.newProperties)'; // any normal functionality
+  login: async () => {
+    const res = 'replace with your login resolver implementation';
     if (!res) {
       throw new Error('Error');
     }

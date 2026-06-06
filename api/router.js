@@ -1,20 +1,18 @@
 const paginate = require('express-paginate');
+const { logger } = require('../config/logger');
 
-// const { userRouter, userRoute } = require('./v1/user/userRoute');
-// const { authRouter, authRoute } = require('./v1/login/loginRoute');
 const { userRouter, userRoute } = require('./v1/user').router;
 const { authRouter, authRoute } = require('./v1/login').router;
 
 const myRouter = (app) => {
   app.use(authRoute.BaseRoute, authRouter);
-  // here we can add any middleware as needed like paginate.middleware
+  // Add shared route-level middleware here (e.g. pagination).
   app.use(paginate.middleware(10, 50));
   app.use((req, res, next) => {
-    console.log(`Incoming Request URL: ${req.originalUrl}`);
+    logger.info(`Incoming request: ${req.originalUrl}`);
     next();
   });
   app.use(userRoute.BaseRoute, userRouter);
 };
-
 
 module.exports = { myRouter };

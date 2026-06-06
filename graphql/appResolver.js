@@ -1,7 +1,6 @@
 const { userQuery, userMutation } = require('./user/resolver');
 const { loginMutation } = require('./login/resolver');
 
-
 /**
  * Here we register any new query resolver, or mutation resolver related
  * to make Modularity like (user Module) and we follow the convention as for `user` Module

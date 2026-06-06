@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon index",
     "start": "node index",
-    "secret": "node util/cli/secretGenerator/secretGenerator.js"
+    "secret": "node util/cli/secretGenerator/secretGenerator.js",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -17,12 +19,10 @@
     "ajv-errors": "^3.0.0",
     "apollo-server-express": "^3.13.0",
     "bcrypt": "^6.0.0",
-    "cluster": "^0.7.7",
     "compression": "^1.8.0",
     "cors": "^2.8.5",
     "defaults": "^3.0.0",
     "dotenv": "^16.5.0",
-    "eslint": "^9.0.0",
     "express": "^4.21.2",
     "express-paginate": "^1.0.2",
     "express-promise-router": "^4.1.1",
@@ -47,6 +47,7 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.31.0",
     "jest": "^30.0.0",

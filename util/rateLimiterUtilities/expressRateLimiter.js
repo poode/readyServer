@@ -16,14 +16,17 @@ function RateLimit(option) {
 
   const defaultSkip = (/* req, res */) => false;
   const defaultHandler = (req, res, next) => {
-    // res.status(options.statusCode).send(options.message);
+    // `options` is defined below but only read when this handler is invoked at request time.
+    // eslint-disable-next-line no-use-before-define
     const err = { message: options.message, status: options.statusCode };
     throw err;
   };
   const defaultOnLimitReached = (/* req, res, optionsUsed */) => {};
 
   // Extract functions from option to prevent cloning by 'defaults'
-  const { keyGenerator, skip, handler, onLimitReached, ...restOption } = option;
+  const {
+    keyGenerator, skip, handler, onLimitReached, ...restOption
+  } = option;
 
   const options = {
     // milliseconds - how long to keep records of requests in memory
@@ -59,7 +62,6 @@ function RateLimit(option) {
   ) {
     throw new Error('The store is not valid.');
   }
-
 
   function rateLimit(req, res, next) {
     if (options.skip(req, res)) {

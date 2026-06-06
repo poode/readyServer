@@ -34,7 +34,7 @@ module.exports = (app, io) => {
     res.locals.io.emit('serverStart', { message: 'welcome to socket Server from root route' });
     return res.json({ message: 'Server is up and running...' });
   });
-  // myRouter(app);
+  myRouter(app);
   app.use('*', (req, res) => {
     const error = {
       message: 'I don\'t blame you.It is my mistake, or may be you\'re calling a wrong endpoint',

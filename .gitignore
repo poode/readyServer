@@ -8,3 +8,5 @@ API-Documentation.yml
 .desktopfolder
 .history
 .idea
+.codegraph/
+.cursor/

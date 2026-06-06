@@ -12,7 +12,6 @@ function slog(msg, object) {
   }
 }
 
-
 module.exports = {
   slog,
 };
